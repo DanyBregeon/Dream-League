@@ -17,6 +17,22 @@ public class Partie : MonoBehaviour {
     public static Text affichageTextPv;
     public static Image barreDeVie;
 
+    private PhotonView view;
+    private Core core;
+
+    public PhotonView View
+    {
+        get
+        {
+            return view;
+        }
+
+        set
+        {
+            view = value;
+        }
+    }
+
     // Use this for initialization
     void Awake () {
         plateau = new Case[Constantes.taillePlateauX, Constantes.taillePlateauY];
@@ -43,7 +59,7 @@ public class Partie : MonoBehaviour {
         for(int i = personnages.Count - 1; i >= 0; i--)
         {
             personnages[i].textPv = GameObject.Find("PV" + (i + 1)).GetComponent<Text>();
-            personnages[i].textPv.enabled = false;
+            personnages[i].textPv.gameObject.SetActive(false);
             personnages[i].SpriteTimeLine = Instantiate(personnages[i].sprites[1], new Vector3(8.25f - (personnages.Count - 1 - i), -4.25f, 0), Quaternion.identity);
             personnages[i].SpriteTimeLine.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
         }
@@ -51,7 +67,8 @@ public class Partie : MonoBehaviour {
     }
     void Start()
     {
-        
+        View = GetComponent<PhotonView>();
+        core = GameObject.Find("Script").GetComponent<Core>();
         personnageTour.DebutTour();
     }
     public static bool MemeEquipe(Personnage p1, Personnage p2)
@@ -146,6 +163,30 @@ public class Partie : MonoBehaviour {
         return null;
     }
 
+    [PunRPC]
+    public void FinTour()
+    {
+        foreach (GameObject i in personnageTour.sortsIcone)
+        {
+            i.SetActive(false);
+        }
+        if (personnageTour.ZoneActive())
+        {
+            personnageTour.Sorts[personnageTour.SortActif()].CleanZone();
+        }
+        if (personnages.IndexOf(personnageTour) < personnages.Count - 1)
+        {
+            personnageTour = personnages[personnages.IndexOf(personnageTour) + 1];
+        }
+        else
+        {
+            tourActuel++;
+            personnageTour = personnages[0];
+        }
+        personnageTour.DebutTour();
+        core.TurnManager.BeginTurn();
+    }
+
     // Update is called once per frame
     void Update () {
         affichageTextPv.text = personnageTour.PvActuel.ToString() + "/" + personnageTour.Pv.ToString();
@@ -153,7 +194,8 @@ public class Partie : MonoBehaviour {
 
         if (Input.GetKeyDown("space"))
         {
-            foreach(GameObject i in personnageTour.sortsIcone)
+            View.RPC("FinTour", PhotonTargets.All);
+            /*foreach(GameObject i in personnageTour.sortsIcone)
             {
                 i.SetActive(false);
             }
@@ -170,7 +212,7 @@ public class Partie : MonoBehaviour {
                 tourActuel++;
                 personnageTour = personnages[0];
             }
-            personnageTour.DebutTour();
+            personnageTour.DebutTour();*/
         }
 
         if (Input.GetKeyDown("a"))

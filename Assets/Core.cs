@@ -46,11 +46,24 @@ public class Core : PunBehaviour, IPunTurnManagerCallbacks
 
     private bool initialiserPartie;
 
+    public PunTurnManager TurnManager
+    {
+        get
+        {
+            return turnManager;
+        }
+
+        set
+        {
+            turnManager = value;
+        }
+    }
+
     public void Start()
     {
-        this.turnManager = this.gameObject.AddComponent<PunTurnManager>();
-        this.turnManager.TurnManagerListener = this;
-        this.turnManager.TurnDuration = 10f;
+        this.TurnManager = this.gameObject.AddComponent<PunTurnManager>();
+        this.TurnManager.TurnManagerListener = this;
+        this.TurnManager.TurnDuration = 10f;
         
         RefreshUIViews();
     }
@@ -59,6 +72,10 @@ public class Core : PunBehaviour, IPunTurnManagerCallbacks
     {
         if (!initialiserPartie && GameObject.FindGameObjectWithTag("Personnage") != null)
         {
+            /*Personnage1 = Instantiate(Personnage1Prefab, Personnage1Prefab.transform.position, Quaternion.identity);
+            Personnage2 = Instantiate(Personnage2Prefab, Personnage2Prefab.transform.position, Quaternion.identity);
+            Personnage3 = Instantiate(Personnage3Prefab, Personnage3Prefab.transform.position, Quaternion.identity);
+            Personnage4 = Instantiate(Personnage4Prefab, Personnage4Prefab.transform.position, Quaternion.identity);*/
             GameObject.Find("Plateau").AddComponent<Partie>();
             GameObject.Find("Plateau").GetComponent<Partie>().enabled = true;
 
@@ -73,6 +90,7 @@ public class Core : PunBehaviour, IPunTurnManagerCallbacks
 
             initialiserPartie = true;
         }
+
         // Check if we are out of context, which means we likely got back to the demo hub.
         if (this.DisconnectedPanel == null)
         {
@@ -109,7 +127,7 @@ public class Core : PunBehaviour, IPunTurnManagerCallbacks
 
         if (PhotonNetwork.room.PlayerCount > 1)
         {
-            if (this.turnManager.IsOver)
+            if (this.TurnManager.IsOver)
             {
                 return;
             }
@@ -126,15 +144,15 @@ public class Core : PunBehaviour, IPunTurnManagerCallbacks
 
             if (this.TurnText != null)
             {
-                this.TurnText.text = this.turnManager.Turn.ToString();
+                this.TurnText.text = this.TurnManager.Turn.ToString();
             }
 
-            if (this.turnManager.Turn > 0 && this.TimeText != null)
+            if (this.TurnManager.Turn > 0 && this.TimeText != null)
             {
 
-                this.TimeText.text = this.turnManager.RemainingSecondsInTurn.ToString("F1") + " SECONDES";
+                this.TimeText.text = this.TurnManager.RemainingSecondsInTurn.ToString("F1") + " SECONDES";
 
-                TimerFillImage.anchorMax = new Vector2(1f - this.turnManager.RemainingSecondsInTurn / this.turnManager.TurnDuration, 1f);
+                TimerFillImage.anchorMax = new Vector2(1f - this.TurnManager.RemainingSecondsInTurn / this.TurnManager.TurnDuration, 1f);
             }
 
 
@@ -197,7 +215,13 @@ public class Core : PunBehaviour, IPunTurnManagerCallbacks
     public void OnTurnTimeEnds(int obj)
     {
         Debug.Log("OnTurnTimeEnds: Calling OnTurnCompleted");
-        this.turnManager.BeginTurn();
+
+        if (PhotonNetwork.isMasterClient)
+        {
+            GameObject.Find("Plateau").GetComponent<Partie>().View.RPC("FinTour", PhotonTargets.All);
+            this.TurnManager.BeginTurn();
+        }
+
     }
 
     private void UpdateScores()
@@ -219,7 +243,7 @@ public class Core : PunBehaviour, IPunTurnManagerCallbacks
             Personnage2 = PhotonNetwork.Instantiate("Prefabs/" + Personnage2Prefab.name, Personnage2Prefab.transform.position, Quaternion.identity, 0);
             Personnage3 = PhotonNetwork.Instantiate("Prefabs/" + Personnage3Prefab.name, Personnage3Prefab.transform.position, Quaternion.identity, 0);
             Personnage4 = PhotonNetwork.Instantiate("Prefabs/" + Personnage4Prefab.name, Personnage4Prefab.transform.position, Quaternion.identity, 0);
-            this.turnManager.BeginTurn();
+            this.TurnManager.BeginTurn();
             //!!!
             
         }
@@ -294,7 +318,7 @@ public class Core : PunBehaviour, IPunTurnManagerCallbacks
 
         if (PhotonNetwork.room.PlayerCount == 2)
         {
-            if (this.turnManager.Turn == 0)
+            if (this.TurnManager.Turn == 0)
             {
                 // when the room has two players, start the first turn (later on, joining players won't trigger a turn)
                 //Partie.personnageTour = PhotonNetwork.Instantiate("Prefabs/" + Personnage1.name, Personnage1.transform.position, Quaternion.identity, 0).GetComponent<Mage>();
@@ -313,7 +337,7 @@ public class Core : PunBehaviour, IPunTurnManagerCallbacks
 
         if (PhotonNetwork.room.PlayerCount == 2)
         {
-            if (this.turnManager.Turn == 0)
+            if (this.TurnManager.Turn == 0)
             {
                 // when the room has two players, start the first turn (later on, joining players won't trigger a turn)
                 this.StartTurn();
