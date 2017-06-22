@@ -8,8 +8,8 @@ public class Assassin : Personnage {
     void Start()
     {
         Pv = 750;
-        Pa = 10;
-        Pm = 4;
+        Pa = 8;
+        Pm = 6;
         PvActuel = 750;
         PaActuel = 10;
         PmActuel = 4;

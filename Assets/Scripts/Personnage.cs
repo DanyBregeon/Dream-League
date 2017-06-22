@@ -24,6 +24,9 @@ public class Personnage : Entitee
     private int resBonusActuel;
 
     [SerializeField]
+    private GameObject affichageTextAction;
+
+    [SerializeField]
     private Sort[] sorts;
 
     private int[] sortsCd;
@@ -31,6 +34,7 @@ public class Personnage : Entitee
     private Vector3 posDepart, posArrivee;
     //private float tempsDebutDeplacement;
     private Case casePersonnage;
+    public GameObject fondTextPv;
     public Text textPv;
     private Text affichageTextPa;
     private Text affichageTextPm;
@@ -43,6 +47,8 @@ public class Personnage : Entitee
     private List<int> buffDgtValeur;
     private List<int> buffResDuree;
     private List<int> buffResValeur;
+
+    private Stack<Case> cheminAParcourir;
 
     private PhotonView view;
 
@@ -150,8 +156,8 @@ public class Personnage : Entitee
         set
         {
             posArrivee = value;
-            if (textPv != null)
-                textPv.transform.position = GameObject.Find("Main Camera").GetComponent<Camera>().WorldToScreenPoint(new Vector3(posArrivee.x, posArrivee.y + 0.4f, posArrivee.z));
+            if (fondTextPv != null)
+                fondTextPv.transform.position = GameObject.Find("Main Camera").GetComponent<Camera>().WorldToScreenPoint(new Vector3(posArrivee.x, posArrivee.y + 0.4f, posArrivee.z));
         }
     }
 
@@ -192,6 +198,10 @@ public class Personnage : Entitee
 
         set
         {
+            if (value - paActuel != 0 && casePersonnage != null)
+            {
+                AfficherText(value - paActuel, Constantes.bleutextPa, casePersonnage);
+            }
             paActuel = value;
             affichageTextPa.text = paActuel.ToString();
         }
@@ -206,6 +216,10 @@ public class Personnage : Entitee
 
         set
         {
+            if (value - pmActuel != 0 && casePersonnage != null)
+            {
+                AfficherText(value - pmActuel, Constantes.vertTextPm, casePersonnage);
+            }
             pmActuel = value;
             affichageTextPm.text = pmActuel.ToString();
         }
@@ -406,6 +420,20 @@ public class Personnage : Entitee
         }
     }
 
+    public Stack<Case> CheminAParcourir
+    {
+        get
+        {
+            return cheminAParcourir;
+        }
+
+        set
+        {
+            cheminAParcourir = value;
+        }
+    }
+
+
     private void Awake()
     {
         PosDepart = transform.position;
@@ -421,7 +449,6 @@ public class Personnage : Entitee
         }
         ;
 
-
         buffPaDuree = new List<int>();
         buffPaValeur = new List<int>();
         BuffPmDuree = new List<int>();
@@ -431,7 +458,15 @@ public class Personnage : Entitee
         BuffResDuree = new List<int>();
         BuffResValeur = new List<int>();
 
+        CheminAParcourir = new Stack<Case>();
+
         view = GetComponent<PhotonView>();
+
+        for(int i = 0; i<sortsIcone.Count; i++)
+        {
+            sortsIcone[i] = Instantiate(sortsIcone[i], sortsIcone[i].transform.position, sortsIcone[i].transform.rotation);
+            sortsIcone[i].SetActive(false);
+        }
 
         /*listeBuff = new List<List<int>[]>()
         {
@@ -449,8 +484,10 @@ public class Personnage : Entitee
             i.SetActive(true);
         }
 
-        PaActuel = pa;
-        PmActuel = pm;
+        paActuel = pa;
+        affichageTextPa.text = paActuel.ToString();
+        pmActuel = pm;
+        affichageTextPm.text = pmActuel.ToString();
         dgtBonusActuel = dgtBonus;
         resBonusActuel = ResBonus;
 
@@ -473,7 +510,8 @@ public class Personnage : Entitee
         {
             if (BuffPaDuree[i] > 0)
             {
-                PaActuel += BuffPaValeur[i];
+                paActuel += BuffPaValeur[i];
+                affichageTextPa.text = paActuel.ToString();
                 BuffPaDuree[i]--;
             }
             else
@@ -487,7 +525,8 @@ public class Personnage : Entitee
         {
             if (BuffPmDuree[i] > 0)
             {
-                PmActuel += BuffPmValeur[i];
+                pmActuel += BuffPmValeur[i];
+                affichageTextPm.text = pmActuel.ToString();
                 BuffPmDuree[i]--;
             }
             else
@@ -600,6 +639,7 @@ public class Personnage : Entitee
             p.spriteTimeLine.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.15f);
             p.casePersonnage.Traversable = true;
             p.textPv.text = "";
+            p.fondTextPv.GetComponent<Image>().rectTransform.localScale = new Vector3(0, 0, 0);
             Destroy(p.gameObject);
             return true;
         }
@@ -608,7 +648,12 @@ public class Personnage : Entitee
 
     public void SeDeplacerVers(string c, String chemin)
     {
-        view.RPC("SeDeplacer", PhotonTargets.AllBuffered, c, chemin);
+        view.RPC("SeDeplacer", PhotonTargets.All, c, chemin);
+    }
+
+    public void LancerSortSur(string c)
+    {
+        view.RPC("LancerSort", PhotonTargets.All, c);
     }
 
     [PunRPC]
@@ -617,6 +662,7 @@ public class Personnage : Entitee
         if(this == Partie.personnageTour)
         {
             Partie.chemin = new Stack<Case>();
+            CheminAParcourir = new Stack<Case>();
             String[] liste;
             liste = chemin.Split('/');
             /*for (int i = 0; i < liste.Length - 1; i++)
@@ -629,14 +675,108 @@ public class Personnage : Entitee
                 Partie.chemin.Push(GameObject.Find(liste[i]).GetComponent<Case>());
             }
 
+            CheminAParcourir = Partie.chemin;
             CasePersonnage.Traversable = true;
             PosArrivee = Partie.personnageTour.PosDepart;
             EnDeplacement = true;
             PmActuel -= Partie.chemin.Count;
             GameObject.Find(c).GetComponent<Case>().Traversable = false;
+            //AfficherText(-Partie.chemin.Count, Constantes.vertTextPm, Partie.personnageTour.casePersonnage);
         }
 
     }
+
+    [PunRPC]
+    protected void LancerSort(string c)
+    {
+        if(this == Partie.personnageTour)
+        {
+            Case caseCible = GameObject.Find(c).GetComponent<Case>();
+            Partie.personnageTour.PaActuel -= Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].Pa;
+            //AfficherText(-Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].Pa, Constantes.bleutextPa, Partie.personnageTour.casePersonnage);
+
+            Partie.personnageTour.SortsCd[Partie.personnageTour.SortActif()] = Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].Cd;
+            if (Partie.personnageTour.SortsCd[Partie.personnageTour.SortActif()] > 0)
+            {
+                Partie.personnageTour.affichageCdSort[Partie.personnageTour.SortActif()].text = Partie.personnageTour.SortsCd[Partie.personnageTour.SortActif()].ToString();
+                Partie.personnageTour.sortsIcone[Partie.personnageTour.SortActif()].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+            }
+            else
+            {
+                Partie.personnageTour.affichageCdSort[Partie.personnageTour.SortActif()].text = "";
+                Partie.personnageTour.sortsIcone[Partie.personnageTour.SortActif()].GetComponent<SpriteRenderer>().color = Color.white;
+            }
+
+            if (Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].SortDeZone)
+            {
+                for (int i = 0; i < Partie.plateau.GetLength(0); i++)
+                {
+                    for (int j = 0; j < Partie.plateau.GetLength(1); j++)
+                    {
+                        if (Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].ZoneEffet(caseCible, Partie.plateau[i, j]))
+                        {
+                            foreach (Personnage p in Partie.personnages)
+                            {
+                                if (p.CasePersonnage == Partie.plateau[i, j])
+                                {
+                                    Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].Effet(p.CasePersonnage);
+                                    p.PvActuel -= (int)(Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].Dgt * (1 + ((float)Partie.personnageTour.DgtBonusActuel) / 100f - ((float)p.ResBonusActuel) / 100f));
+                                    if (Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].Dgt > 0)
+                                    {
+                                        AfficherText(-(int)(Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].Dgt * (1 + ((float)Partie.personnageTour.DgtBonusActuel) / 100f - ((float)p.ResBonusActuel) / 100f)), Color.red, p.CasePersonnage);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].CibleNonPersonnage)
+                {
+                    Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].Effet(caseCible);
+                }
+                else
+                {
+                    foreach (Personnage p in Partie.personnages)
+                    {
+                        if (p.CasePersonnage == caseCible)
+                        {
+                            Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].Effet(caseCible);
+                            p.PvActuel -= (int)(Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].Dgt * (1 + ((float)Partie.personnageTour.DgtBonusActuel) / 100f - ((float)p.ResBonusActuel) / 100f));
+                            if (Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].Dgt > 0)
+                            {
+                                AfficherText(-(int)(Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].Dgt * (1 + ((float)Partie.personnageTour.DgtBonusActuel) / 100f - ((float)p.ResBonusActuel) / 100f)), Color.red, caseCible);
+                            }
+                        }
+                    }
+                }
+
+            }
+            for (int i = 0; i < Partie.personnageTour.Sorts.Length; i++)
+            {
+                if (Partie.personnageTour.PaActuel < Partie.personnageTour.Sorts[i].Pa)
+                {
+                    Partie.personnageTour.sortsIcone[i].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+                }
+            }
+            Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].CleanZone();
+
+        }
+    }
+
+    public void AfficherText(int n, Color couleur, Case c)
+    {
+        c.NbTextAction++;
+        GameObject textAction = Instantiate(affichageTextAction, GameObject.Find("Main Camera").GetComponent<Camera>().WorldToScreenPoint(new Vector3(c.transform.position.x, c.transform.position.y + 0.4f, -10f)), Quaternion.identity);
+        textAction.GetComponent<Text>().color = couleur;
+        textAction.transform.SetParent(GameObject.Find("Canvas").transform);
+        textAction.GetComponent<TextStats>().EnAttente = (float)(c.NbTextAction - 1)/4f;
+        textAction.GetComponent<TextStats>().C = c;
+        textAction.GetComponent<TextStats>().Nombre = "" + n;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -647,11 +787,12 @@ public class Personnage : Entitee
             Case caseDepart = casePersonnage;
 
             Case caseArrivee;
-            if (Partie.chemin.Count > 0 && transform.position == posArrivee)
+            if (/*Partie.chemin.Count > 0*/CheminAParcourir.Count > 0 && transform.position == posArrivee)
             {
                 Vector3 depart = transform.position;
                 Vector3 arrivee = depart;
-                caseArrivee = Partie.chemin.Pop();
+                //caseArrivee = Partie.chemin.Pop();
+                caseArrivee = CheminAParcourir.Pop();
 
                 if (caseArrivee.X > caseDepart.X && Math.Round((float)caseArrivee.Y) == Math.Round((float)caseDepart.Y))
                 {

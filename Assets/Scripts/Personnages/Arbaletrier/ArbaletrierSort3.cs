@@ -55,7 +55,7 @@ public class ArbaletrierSort3 : Sort {
                 }
 
                 List<Case> cheminCharge = new List<Case>();
-                Partie.chemin = new Stack<Case>();
+                p.CheminAParcourir = new Stack<Case>();
 
                 Case caseSuivante = c;
                 while ((caseSuivante.Traversable || caseSuivante == c) && !(caseSuivante.X == c.X + 2 || caseSuivante.Y == c.Y + 2 || caseSuivante.X == c.X - 2 || caseSuivante.Y == c.Y - 2))
@@ -119,7 +119,7 @@ public class ArbaletrierSort3 : Sort {
                 }
                 for (int i = cheminCharge.Count - 1; i >= 0; i--)
                 {
-                    Partie.chemin.Push(cheminCharge[i]);
+                    p.CheminAParcourir.Push(cheminCharge[i]);
                 }
 
                 if (cheminCharge.Count > 0)
@@ -142,6 +142,8 @@ public class ArbaletrierSort3 : Sort {
             p.BuffPaValeur.Add(-3);
             p.BuffPmDuree.Add(1);
             p.BuffPmValeur.Add(-3);
+            p.AfficherText(-3, Constantes.vertTextPm, p.CasePersonnage);
+            p.AfficherText(-3, Constantes.bleutextPa, p.CasePersonnage);
         }
         if (Partie.personnageTour.SortsCd[1] > 0)
         {

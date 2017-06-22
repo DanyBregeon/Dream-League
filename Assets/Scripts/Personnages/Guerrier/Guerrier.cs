@@ -39,8 +39,8 @@ public class Guerrier : Personnage
     // Use this for initialization
     void Start()
     {
-        textFurie = GameObject.Find("Furie").GetComponent<Text>();
-        textFurie.enabled = false;
+        textFurie = GameObject.Find("TextFurie").GetComponent<Text>();
+        textFurie.text = "";
         Furie = 0;
         FurieMax = 500;
         Pv = 850;
@@ -60,5 +60,11 @@ public class Guerrier : Personnage
         }
 
         PosArrivee = PosDepart;
+    }
+
+    public override void DebutTour()
+    {
+        textFurie.text = "" + furie;
+        base.DebutTour();
     }
 }

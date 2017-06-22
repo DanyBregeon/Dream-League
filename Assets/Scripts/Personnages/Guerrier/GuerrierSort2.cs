@@ -10,7 +10,7 @@ public class GuerrierSort2 : Sort {
         Pa = 4;
         PoMin = 0;
         Po = 0;
-        Dgt = 70;
+        Dgt = 80;
         Cd = 1;
         SortDeZone = true;
     }
@@ -23,7 +23,7 @@ public class GuerrierSort2 : Sort {
             {
                 if (p.CasePersonnage == c)
                 {
-                    Dgt = 70;
+                    Dgt = 80;
                     Dgt = (int)(Dgt * (1 + (float)((Guerrier)Partie.personnageTour).Furie / 1000f));
                     if (Partie.teamA.Contains(p) && Partie.teamB.Contains(Partie.personnageTour) || Partie.teamB.Contains(p) && Partie.teamA.Contains(Partie.personnageTour))
                     {

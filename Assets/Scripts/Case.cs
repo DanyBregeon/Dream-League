@@ -14,6 +14,7 @@ public class Case : MonoBehaviour {
     private char etat;
     private GameObject go;
     private bool mur;
+    private int nbTextAction;
 
     public bool Traversable
     {
@@ -119,6 +120,19 @@ public class Case : MonoBehaviour {
         }
     }
 
+    public int NbTextAction
+    {
+        get
+        {
+            return nbTextAction;
+        }
+
+        set
+        {
+            nbTextAction = value;
+        }
+    }
+
     // Use this for initialization
     void Start () {
         Go = gameObject;
@@ -143,42 +157,49 @@ public class Case : MonoBehaviour {
         //test
         if (x == 6 && y == 12)
         {
-            Partie.personnageTour.CasePersonnage = this;
+            //Partie.personnageTour.CasePersonnage = this;
+            Partie.personnages[0].CasePersonnage = this;
             traversable = false;
         }
         if (x == 7 && y == 1)
         {
             // !!!
-            GameObject.Find("PersonnageGuerrier(Clone)").GetComponent<Guerrier>().CasePersonnage = this;
+            //GameObject.Find("PersonnageGuerrier(Clone)").GetComponent<Guerrier>().CasePersonnage = this;
+            Partie.personnages[1].CasePersonnage = this;
             traversable = false;
         }
         if (x == 5 && y == 1)
         {
             // !!!
-            GameObject.Find("PersonnageArbaletrier(Clone)").GetComponent<Arbaletrier>().CasePersonnage = this;
+            //GameObject.Find("PersonnageArbaletrier(Clone)").GetComponent<Arbaletrier>().CasePersonnage = this;
+            Partie.personnages[3].CasePersonnage = this;
             traversable = false;
         }
         if (x == 8 && y == 12)
         {
             // !!!
-            GameObject.Find("PersonnageAssassin(Clone)").GetComponent<Assassin>().CasePersonnage = this;
+            //GameObject.Find("PersonnageAssassin(Clone)").GetComponent<Assassin>().CasePersonnage = this;
+            Partie.personnages[2].CasePersonnage = this;
             traversable = false;
         }
     }
 
     void OnMouseEnter()
     {
-        if (traversable && !Partie.personnageTour.EnDeplacement && !Partie.personnageTour.ZoneActive())
+        if ((Partie.joueur == 1 && Partie.teamA.Contains(Partie.personnageTour)) || (Partie.joueur == 2 && Partie.teamB.Contains(Partie.personnageTour)))
         {
-            Case depart = Partie.personnageTour.CasePersonnage;
-            Partie.chemin = Partie.CheminPlusCourt(depart, this);
+            if (traversable && !Partie.personnageTour.EnDeplacement && !Partie.personnageTour.ZoneActive())
+            {
+                Case depart = Partie.personnageTour.CasePersonnage;
+                Partie.chemin = Partie.CheminPlusCourt(depart, this);
+            }
         }
         
         foreach(Personnage p in Partie.personnages)
         {
             if(p.CasePersonnage == this)
             {
-                p.textPv.gameObject.SetActive(true);
+                p.fondTextPv.gameObject.SetActive(true);
             }
         }
 
@@ -246,7 +267,7 @@ public class Case : MonoBehaviour {
         {
             if (p.CasePersonnage == this)
             {
-                p.textPv.gameObject.SetActive(false);
+                p.fondTextPv.gameObject.SetActive(false);
             }
         }
 
@@ -255,40 +276,46 @@ public class Case : MonoBehaviour {
 
     void OnMouseDown()
     {
-        if (traversable && !Partie.personnageTour.EnDeplacement && !Partie.personnageTour.ZoneActive())
+        if ((Partie.joueur == 1 && Partie.teamA.Contains(Partie.personnageTour)) || (Partie.joueur == 2 && Partie.teamB.Contains(Partie.personnageTour)))
         {
-            if (Partie.chemin != null)
+            if (traversable && !Partie.personnageTour.EnDeplacement && !Partie.personnageTour.ZoneActive())
             {
-                String chemin = "";
-                foreach (Case c in Partie.chemin)
+                if (Partie.chemin != null)
                 {
-                    chemin += (c.gameObject.name + "/");
-                }
-                Partie.personnageTour.SeDeplacerVers(this.gameObject.name, chemin);
-                /*Partie.personnageTour.CasePersonnage.Traversable = true;
-                Partie.personnageTour.PosArrivee = Partie.personnageTour.PosDepart;
-                Partie.personnageTour.EnDeplacement = true;
-                Partie.personnageTour.PmActuel -= Partie.chemin.Count;
-                Traversable = false;*/
-            }
-            for (int i = 0; i < Partie.plateau.GetLength(0); i++)
-            {
-                for (int j = 0; j < Partie.plateau.GetLength(1); j++)
-                {
-                    if (Partie.plateau[i, j].Go.GetComponent<SpriteRenderer>().color == Color.green)
+                    String chemin = "";
+                    foreach (Case c in Partie.chemin)
                     {
-                        Partie.plateau[i, j].Go.GetComponent<SpriteRenderer>().color = Color.white;
+                        chemin += (c.gameObject.name + "/");
+                    }
+                    Partie.personnageTour.SeDeplacerVers(this.gameObject.name, chemin);
+                    /*Partie.personnageTour.CasePersonnage.Traversable = true;
+                    Partie.personnageTour.PosArrivee = Partie.personnageTour.PosDepart;
+                    Partie.personnageTour.EnDeplacement = true;
+                    Partie.personnageTour.PmActuel -= Partie.chemin.Count;
+                    Traversable = false;*/
+                }
+                for (int i = 0; i < Partie.plateau.GetLength(0); i++)
+                {
+                    for (int j = 0; j < Partie.plateau.GetLength(1); j++)
+                    {
+                        if (Partie.plateau[i, j].Go.GetComponent<SpriteRenderer>().color == Color.green)
+                        {
+                            Partie.plateau[i, j].Go.GetComponent<SpriteRenderer>().color = Color.white;
+                        }
                     }
                 }
             }
         }
+            
         if (Partie.personnageTour.ZoneActive())
         {
             if(gameObject.GetComponent<SpriteRenderer>().color == Color.red || gameObject.GetComponent<SpriteRenderer>().color == Color.blue)
             {
                 if(Partie.personnageTour.PaActuel >= Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].Pa)
                 {
-                    Partie.personnageTour.PaActuel -= Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].Pa;
+                    Partie.personnageTour.LancerSortSur(this.gameObject.name);
+
+                    /*Partie.personnageTour.PaActuel -= Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].Pa;
 
                     Partie.personnageTour.SortsCd[Partie.personnageTour.SortActif()] = Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].Cd;
                     if (Partie.personnageTour.SortsCd[Partie.personnageTour.SortActif()] > 0)
@@ -349,7 +376,7 @@ public class Case : MonoBehaviour {
                             Partie.personnageTour.sortsIcone[i].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
                         }
                     }
-                    Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].CleanZone();
+                    Partie.personnageTour.Sorts[Partie.personnageTour.SortActif()].CleanZone();*/
 
                 }
             }

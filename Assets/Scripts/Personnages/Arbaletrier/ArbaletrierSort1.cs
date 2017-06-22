@@ -54,8 +54,8 @@ public class ArbaletrierSort1 : Sort {
                     }
                 if (((Arbaletrier)Partie.personnageTour).Ultime)
                 {
-                    p.BuffPmDuree.Add(1);
-                    p.BuffPmValeur.Add(-1);
+                    //p.BuffPmDuree.Add(1);
+                    //p.BuffPmValeur.Add(-1);
                     Partie.personnageTour.PmActuel++;
                 }
             }

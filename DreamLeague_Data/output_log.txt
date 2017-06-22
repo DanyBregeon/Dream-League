@@ -1,40 +1,41 @@
-Initialize engine version: 5.6.1f1 (2860b30f0b54)
+Initialize engine version: 5.6.0f3 (497a0f351392)
 GfxDevice: creating device client; threaded=1
 Direct3D:
-    Version:  Direct3D 11.0 [level 11.1]
-    Renderer: NVIDIA GeForce GTX 1070 (ID=0x1b81)
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GT 620 (ID=0x1049)
     Vendor:   NVIDIA
-    VRAM:     3072 MB
-    Driver:   22.21.13.8205
+    VRAM:     1999 MB
+    Driver:   21.21.13.7563
 Begin MonoManager ReloadAssembly
-Platform assembly: G:\Unity\Dream League\DreamLeague_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading G:\Unity\Dream League\DreamLeague_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: G:\Unity\Dream League\DreamLeague_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading G:\Unity\Dream League\DreamLeague_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: G:\Unity\Dream League\DreamLeague_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading G:\Unity\Dream League\DreamLeague_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: G:\Unity\Dream League\DreamLeague_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading G:\Unity\Dream League\DreamLeague_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: G:\Unity\Dream League\DreamLeague_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading G:\Unity\Dream League\DreamLeague_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-Platform assembly: G:\Unity\Dream League\DreamLeague_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
-Loading G:\Unity\Dream League\DreamLeague_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
-Platform assembly: G:\Unity\Dream League\DreamLeague_Data\Managed\Photon3Unity3D.dll (this message is harmless)
-Loading G:\Unity\Dream League\DreamLeague_Data\Managed\Photon3Unity3D.dll into Unity Child Domain
-- Completed reload, in  0.106 seconds
-Platform assembly: G:\Unity\Dream League\DreamLeague_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: G:\Unity\Dream League\DreamLeague_Data\Managed\System.dll (this message is harmless)
-desktop: 1440x900 60Hz; virtual: 4000x1080 at 0,0
+Platform assembly: C:\Users\dany\gitUnity\Dream-League\DreamLeague_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\dany\gitUnity\Dream-League\DreamLeague_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\dany\gitUnity\Dream-League\DreamLeague_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\dany\gitUnity\Dream-League\DreamLeague_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\dany\gitUnity\Dream-League\DreamLeague_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\dany\gitUnity\Dream-League\DreamLeague_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\dany\gitUnity\Dream-League\DreamLeague_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\dany\gitUnity\Dream-League\DreamLeague_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\dany\gitUnity\Dream-League\DreamLeague_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\dany\gitUnity\Dream-League\DreamLeague_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\dany\gitUnity\Dream-League\DreamLeague_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading C:\Users\dany\gitUnity\Dream-League\DreamLeague_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+Platform assembly: C:\Users\dany\gitUnity\Dream-League\DreamLeague_Data\Managed\Photon3Unity3D.dll (this message is harmless)
+Loading C:\Users\dany\gitUnity\Dream-League\DreamLeague_Data\Managed\Photon3Unity3D.dll into Unity Child Domain
+- Completed reload, in  0.031 seconds
+Platform assembly: C:\Users\dany\gitUnity\Dream-League\DreamLeague_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\dany\gitUnity\Dream-League\DreamLeague_Data\Managed\System.dll (this message is harmless)
+desktop: 2048x1152 60Hz; virtual: 4608x1152 at -2048,0
 <RI> Initializing input.
-<RI.Hid> Failed to create device file:
- 2 Le fichier spécifié est introuvable.
-
- 
-(Filename:  Line: 54)
-
+XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 2.401898 ms
+UnloadTime: 1.257528 ms
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.339294 ms
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1747.
+Total: 0.615716 ms (FindLiveObjects: 0.094141 ms CreateObjectMapping: 0.044923 ms MarkObjects: 0.460796 ms  DeleteObjects: 0.014864 ms)
+
 Operation failed: OperationResponse 225: ReturnCode: 32760 (No match found). Parameters: {}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
@@ -43,7 +44,7 @@ OnPhotonRandomJoinFailed
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Joined room: 603c5018-749a-44a9-a38c-3a00910a6555
+Joined room: a91e3da6-0365-41d6-a396-4a71a54ca6cb
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
@@ -75,11 +76,63 @@ CaseSol (151)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-CaseSol (48)
+OnTurnBegins() turn: 2
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-CaseSol (50)
+OnTurnBegins() turn: 2
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (56)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (53)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (62)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (64)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 3
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 3
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (106)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (107)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (151)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (145)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (146)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 4
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 4
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
@@ -99,54 +152,6 @@ CaseSol (64)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-OnTurnTimeEnds: Calling OnTurnCompleted
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-OnTurnBegins() turn: 2
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-OnTurnBegins() turn: 2
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-CaseSol (112)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-CaseSol (121)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-CaseSol (120)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-CaseSol (148)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-OnTurnTimeEnds: Calling OnTurnCompleted
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-OnTurnBegins() turn: 3
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-OnTurnBegins() turn: 3
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-CaseSol (62)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-CaseSol (64)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
 CaseSol (67)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
@@ -155,11 +160,75 @@ CaseSol (70)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-CaseSol (96)
+OnTurnBegins() turn: 5
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-CaseSol (98)
+OnTurnBegins() turn: 5
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 6
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 6
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (138)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (139)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (140)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 7
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 7
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 8
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 8
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (139)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (140)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (54)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (50)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (131)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 9
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 9
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
@@ -167,58 +236,162 @@ CaseSol (100)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-CaseSol (101)
+CaseSol (102)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-OnTurnTimeEnds: Calling OnTurnCompleted
+OnTurnBegins() turn: 10
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-OnTurnBegins() turn: 4
+OnTurnBegins() turn: 10
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-OnTurnBegins() turn: 4
+CaseSol (21)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-CaseSol (111)
+CaseSol (23)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-CaseSol (114)
+CaseSol (80)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-CaseSol (115)
+CaseSol (82)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-CaseSol (132)
+OnTurnBegins() turn: 11
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-CaseSol (133)
+OnTurnBegins() turn: 11
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-CaseSol (135)
+CaseSol (130)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-OnTurnTimeEnds: Calling OnTurnCompleted
+OnTurnBegins() turn: 12
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-OnTurnBegins() turn: 5
+OnTurnBegins() turn: 12
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-OnTurnBegins() turn: 5
+OnTurnBegins() turn: 13
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 13
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 14
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 14
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 15
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 15
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 16
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 16
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 17
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 17
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 18
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 18
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 19
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 19
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 20
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 20
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (142)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (141)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (131)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 21
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnTurnBegins() turn: 21
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (19)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (21)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (23)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (18)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (9)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CaseSol (7)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 441c -> priority: 1 
-  Thread -> id: 7e8 -> priority: 1 
+  Thread -> id: 3c6c -> priority: 1 
+  Thread -> id: 33d4 -> priority: 1 

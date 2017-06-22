@@ -23,6 +23,7 @@ public class MageSort3 : Sort {
             {
                 p.BuffPmDuree.Add(1);
                 p.BuffPmValeur.Add(-2);
+                p.AfficherText(-2, Constantes.vertTextPm, c);
             }
         }
     }

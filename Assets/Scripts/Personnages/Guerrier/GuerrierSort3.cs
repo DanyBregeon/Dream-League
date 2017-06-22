@@ -45,7 +45,7 @@ public class GuerrierSort3 : Sort
                         }
                     }
                     List<Case> cheminCharge = new List<Case>();
-                    Partie.chemin = new Stack<Case>();
+                    Partie.personnageTour.CheminAParcourir = new Stack<Case>();
 
                     Case caseSuivante = Partie.personnageTour.CasePersonnage;
                     while (caseSuivante.Traversable || caseSuivante == Partie.personnageTour.CasePersonnage)
@@ -73,7 +73,7 @@ public class GuerrierSort3 : Sort
                     }
                     for (int i = cheminCharge.Count - 1; i >= 0; i--)
                     {
-                        Partie.chemin.Push(cheminCharge[i]);
+                        Partie.personnageTour.CheminAParcourir.Push(cheminCharge[i]);
                     }
 
                     if(cheminCharge.Count > 0)

@@ -9,7 +9,7 @@ public class GuerrierSort4 : Sort {
         Pa = 7;
         PoMin = 1;
         Po = 1;
-        Dgt = 160;
+        Dgt = 180;
         Cd = 3;
     }
 
@@ -17,20 +17,20 @@ public class GuerrierSort4 : Sort {
     {
         if (Partie.personnageTour.GetType() == typeof(Guerrier))
         {
-            Dgt = 160;
+            Dgt = 180;
             foreach (Personnage p in Partie.personnages)
             {
                 if (p.CasePersonnage == c)
                 {
                     if (((Guerrier)Partie.personnageTour).Furie == ((Guerrier)Partie.personnageTour).FurieMax)
                     {
-                        Dgt = 240;
+                        Dgt = 270;
                         Dgt = (int)(Dgt * (1 + (float)((Guerrier)Partie.personnageTour).Furie / 1000f));
                         ((Guerrier)Partie.personnageTour).Furie = 0;
                     }
                     else
                     {
-                        Dgt = 160;
+                        Dgt = 180;
                         Dgt = (int)(Dgt * (1 + (float)((Guerrier)Partie.personnageTour).Furie / 1000f));
                         if (Partie.teamA.Contains(p) && Partie.teamB.Contains(Partie.personnageTour) || Partie.teamB.Contains(p) && Partie.teamA.Contains(Partie.personnageTour))
                         {

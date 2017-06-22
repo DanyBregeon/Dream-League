@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dream-League.Plugins", "Dream-League.Plugins.csproj", "{189D905D-3CC3-D4E2-5BDB-CF379CE04A50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dream-League", "Dream-League.csproj", "{ED234256-5B24-A84E-10DC-2BA4F4928D83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dream-League.Editor", "Dream-League.Editor.csproj", "{1401741E-1680-6300-F788-09D2356257AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{189D905D-3CC3-D4E2-5BDB-CF379CE04A50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{189D905D-3CC3-D4E2-5BDB-CF379CE04A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{189D905D-3CC3-D4E2-5BDB-CF379CE04A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{189D905D-3CC3-D4E2-5BDB-CF379CE04A50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED234256-5B24-A84E-10DC-2BA4F4928D83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED234256-5B24-A84E-10DC-2BA4F4928D83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED234256-5B24-A84E-10DC-2BA4F4928D83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED234256-5B24-A84E-10DC-2BA4F4928D83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1401741E-1680-6300-F788-09D2356257AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1401741E-1680-6300-F788-09D2356257AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1401741E-1680-6300-F788-09D2356257AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1401741E-1680-6300-F788-09D2356257AF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

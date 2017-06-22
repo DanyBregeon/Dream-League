@@ -44,6 +44,9 @@ public class Core : PunBehaviour, IPunTurnManagerCallbacks
     private GameObject Personnage3;
     private GameObject Personnage4;
 
+    private PhotonView view;
+
+    private bool initialiserPersonnages;
     private bool initialiserPartie;
 
     public PunTurnManager TurnManager
@@ -61,23 +64,62 @@ public class Core : PunBehaviour, IPunTurnManagerCallbacks
 
     public void Start()
     {
+        initialiserPersonnages = false;
+        initialiserPartie = false;
         this.TurnManager = this.gameObject.AddComponent<PunTurnManager>();
         this.TurnManager.TurnManagerListener = this;
-        this.TurnManager.TurnDuration = 10f;
-        
+        this.TurnManager.TurnDuration = 30f;
+        view = gameObject.GetComponent<PhotonView>();
+
         RefreshUIViews();
     }
 
     public void Update()
     {
-        if (!initialiserPartie && GameObject.FindGameObjectWithTag("Personnage") != null)
+        if (!initialiserPersonnages && SceneConstant.teamJoueur.Count >= 4)
+        {
+            if (PhotonNetwork.isMasterClient)
+            {
+                //!!!
+                Personnage1 = PhotonNetwork.Instantiate("Prefabs/" + SceneConstant.teamJoueur[0], new Vector3(2.58f, -1.25f, 0.825f), Quaternion.identity, 0);
+                Personnage2 = PhotonNetwork.Instantiate("Prefabs/" + SceneConstant.teamJoueur[2], new Vector3(-2.58f, 1.25f, 0.925f), Quaternion.identity, 0);
+                Personnage3 = PhotonNetwork.Instantiate("Prefabs/" + SceneConstant.teamJoueur[1], new Vector3(1.72f, -1.75f, 0.805f), Quaternion.identity, 0);
+                Personnage4 = PhotonNetwork.Instantiate("Prefabs/" + SceneConstant.teamJoueur[3], new Vector3(-1.72f, 1.75f, 0.945f), Quaternion.identity, 0);
+                Personnage1.GetComponent<PhotonView>().onSerializeTransformOption = OnSerializeTransform.OnlyScale;
+                Personnage2.GetComponent<PhotonView>().onSerializeTransformOption = OnSerializeTransform.OnlyScale;
+                Personnage3.GetComponent<PhotonView>().onSerializeTransformOption = OnSerializeTransform.OnlyScale;
+                Personnage4.GetComponent<PhotonView>().onSerializeTransformOption = OnSerializeTransform.OnlyScale;
+            }
+            initialiserPersonnages = true;
+        }
+
+        if (!initialiserPartie && initialiserPersonnages && GameObject.FindGameObjectWithTag("Personnage") != null)
         {
             /*Personnage1 = Instantiate(Personnage1Prefab, Personnage1Prefab.transform.position, Quaternion.identity);
             Personnage2 = Instantiate(Personnage2Prefab, Personnage2Prefab.transform.position, Quaternion.identity);
             Personnage3 = Instantiate(Personnage3Prefab, Personnage3Prefab.transform.position, Quaternion.identity);
             Personnage4 = Instantiate(Personnage4Prefab, Personnage4Prefab.transform.position, Quaternion.identity);*/
+            if (Personnage1 == null)
+            {
+                //print(SceneConstant.teamJoueur[2] + "   " + SceneConstant.teamJoueur[3] + "   " + SceneConstant.teamJoueur[0] + "   " + SceneConstant.teamJoueur[1] + "   ");
+                Personnage1 = GameObject.Find(SceneConstant.teamJoueur[2] + "(Clone)");
+                Personnage2 = GameObject.Find(SceneConstant.teamJoueur[0] + "(Clone)");
+                Personnage3 = GameObject.Find(SceneConstant.teamJoueur[3] + "(Clone)");
+                Personnage4 = GameObject.Find(SceneConstant.teamJoueur[1] + "(Clone)");
+
+                //print(Personnage1);
+            }
             GameObject.Find("Plateau").AddComponent<Partie>();
             GameObject.Find("Plateau").GetComponent<Partie>().enabled = true;
+
+            if (PhotonNetwork.isMasterClient)
+            {
+                Partie.joueur = 1;
+            }
+            else
+            {
+                Partie.joueur = 2;
+            }
 
             Transform[] allChildren = GameObject.Find("Plateau").GetComponentsInChildren<Transform>();
             foreach (Transform c in allChildren)
@@ -85,6 +127,41 @@ public class Core : PunBehaviour, IPunTurnManagerCallbacks
                 if(c.gameObject.name.Length >= 7 && c.gameObject.name.Substring(0,7) == "CaseSol")
                 {
                     c.gameObject.AddComponent<Case>();
+                }
+            }
+
+            //print(Partie.personnages + "   " + Personnage1.GetComponent<Personnage>());
+            Partie.personnages.Add(Personnage1.GetComponent<Personnage>());
+            Partie.personnages.Add(Personnage2.GetComponent<Personnage>());
+            Partie.personnages.Add(Personnage3.GetComponent<Personnage>());
+            Partie.personnages.Add(Personnage4.GetComponent<Personnage>());
+            //print(Partie.personnages[0]);
+
+            Partie.teamA.Add(Partie.personnages[0]);
+            Partie.teamA.Add(Partie.personnages[2]);
+            Partie.teamB.Add(Partie.personnages[1]);
+            Partie.teamB.Add(Partie.personnages[3]);
+            Partie.personnageTour = Partie.personnages[0];
+
+
+
+            for (int i = Partie.personnages.Count - 1; i >= 0; i--)
+            {
+
+                Partie.personnages[i].fondTextPv = GameObject.Find("PanelPv" + (i + 1));
+                Partie.personnages[i].textPv = GameObject.Find("PV" + (i + 1)).GetComponent<Text>();
+                Partie.personnages[i].fondTextPv.GetComponent<Image>().rectTransform.localScale = new Vector3(1, 1, 1);
+                Partie.personnages[i].fondTextPv.gameObject.SetActive(false);
+                Partie.personnages[i].SpriteTimeLine = Instantiate(Partie.personnages[i].sprites[1], new Vector3(8.25f - (Partie.personnages.Count - 1 - i), -4.25f, 0), Quaternion.identity);
+                Partie.personnages[i].SpriteTimeLine.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+
+                if (Partie.joueur == 1 && Partie.teamA.Contains(Partie.personnages[i]) || Partie.joueur == 2 && Partie.teamB.Contains(Partie.personnages[i]))
+                {
+                    Partie.personnages[i].fondTextPv.GetComponent<Image>().color = Color.green;
+                }
+                else
+                {
+                    Partie.personnages[i].fondTextPv.GetComponent<Image>().color = Color.red;
                 }
             }
 
@@ -237,16 +314,52 @@ public class Core : PunBehaviour, IPunTurnManagerCallbacks
     /// <summary>Call to start the turn (only the Master Client will send this).</summary>
     public void StartTurn()
     {
-        if (PhotonNetwork.isMasterClient)
+        if (!PhotonNetwork.isMasterClient)
         {
-            Personnage1 = PhotonNetwork.Instantiate("Prefabs/" + Personnage1Prefab.name, Personnage1Prefab.transform.position, Quaternion.identity, 0);
+            view.RPC("AjouterPersonnage", PhotonTargets.All, SceneConstant.teamJoueur1[0]);
+            view.RPC("AjouterPersonnage", PhotonTargets.All, SceneConstant.teamJoueur1[1]);
+        }
+        else if (PhotonNetwork.isMasterClient)
+        {
+            view.RPC("AjouterPersonnage", PhotonTargets.All, SceneConstant.teamJoueur1[0]);
+            view.RPC("AjouterPersonnage", PhotonTargets.All, SceneConstant.teamJoueur1[1]);
+
+            /*Personnage1Prefab = SceneConstant.teamJoueurPrefab[0];
+            Personnage1Prefab = SceneConstant.teamJoueurPrefab[1];
+            Personnage1Prefab = SceneConstant.teamJoueurPrefab[2];
+            Personnage1Prefab = SceneConstant.teamJoueurPrefab[3];*/
+            //!!!
+            /*Personnage1 = PhotonNetwork.Instantiate("Prefabs/" + SceneConstant.teamJoueur[0], new Vector3(2.58f, -1.25f, 0.825f), Quaternion.identity, 0);
+            Personnage2 = PhotonNetwork.Instantiate("Prefabs/" + SceneConstant.teamJoueur[1], new Vector3(-2.58f, 1.25f, 0.925f), Quaternion.identity, 0);
+            Personnage3 = PhotonNetwork.Instantiate("Prefabs/" + SceneConstant.teamJoueur[2], new Vector3(1.72f, -1.75f, 0.805f), Quaternion.identity, 0);
+            Personnage4 = PhotonNetwork.Instantiate("Prefabs/" + SceneConstant.teamJoueur[3], new Vector3(-1.72f, 1.75f, 0.945f), Quaternion.identity, 0);*/
+
+            /*Personnage1 = PhotonNetwork.Instantiate("Prefabs/" + Personnage1Prefab.name, Personnage1Prefab.transform.position, Quaternion.identity, 0);
             Personnage2 = PhotonNetwork.Instantiate("Prefabs/" + Personnage2Prefab.name, Personnage2Prefab.transform.position, Quaternion.identity, 0);
             Personnage3 = PhotonNetwork.Instantiate("Prefabs/" + Personnage3Prefab.name, Personnage3Prefab.transform.position, Quaternion.identity, 0);
-            Personnage4 = PhotonNetwork.Instantiate("Prefabs/" + Personnage4Prefab.name, Personnage4Prefab.transform.position, Quaternion.identity, 0);
+            Personnage4 = PhotonNetwork.Instantiate("Prefabs/" + Personnage4Prefab.name, Personnage4Prefab.transform.position, Quaternion.identity, 0);*/
+            /*Personnage1.GetComponent<PhotonView>().onSerializeTransformOption = OnSerializeTransform.OnlyScale;
+            Personnage2.GetComponent<PhotonView>().onSerializeTransformOption = OnSerializeTransform.OnlyScale;
+            Personnage3.GetComponent<PhotonView>().onSerializeTransformOption = OnSerializeTransform.OnlyScale;
+            Personnage4.GetComponent<PhotonView>().onSerializeTransformOption = OnSerializeTransform.OnlyScale;*/
             this.TurnManager.BeginTurn();
             //!!!
             
         }
+    }
+
+    [PunRPC]
+    public void AjouterPersonnage(string s)
+    {
+        if (SceneConstant.teamJoueur.Contains(s))
+        {
+            SceneConstant.teamJoueur.Add(s + "2");
+        }
+        else
+        {
+            SceneConstant.teamJoueur.Add(s);
+        }
+
     }
 
     public void MakeTurn()

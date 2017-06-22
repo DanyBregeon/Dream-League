@@ -9,13 +9,13 @@ public class AssassinSort3 : Sort {
         Pa = 4;
         PoMin = 1;
         Po = 1;
-        Dgt = 80;
+        Dgt = 90;
         Cd = 1;
     }
 
     public override void Effet(Case c)
     {
-        Dgt = 80;
+        Dgt = 90;
         foreach (Personnage p in Partie.personnages)
         {
             if (p.CasePersonnage == c)

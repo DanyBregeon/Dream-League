@@ -26,6 +26,7 @@ public class GuerrierSort1 : Sort {
                     {
                         p.BuffPaDuree.Add(1);
                         p.BuffPaValeur.Add(-1);
+                        p.AfficherText(-1, Constantes.bleutextPa, c);
                     }
                     Dgt = 60;
                     Dgt = (int)(Dgt * (1 + (float)((Guerrier)Partie.personnageTour).Furie / 1000f));
